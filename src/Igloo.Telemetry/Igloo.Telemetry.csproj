@@ -1,0 +1,52 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>latest</LangVersion>
+
+    <!-- NuGet package metadata -->
+    <PackageId>Igloo.Telemetry</PackageId>
+    <Version>1.0.0</Version>
+    <Authors>Igloo Events</Authors>
+    <Description>Structured telemetry, distributed tracing, and custom metrics for Igloo Events applications. Built on OpenTelemetry and System.Diagnostics.</Description>
+    <PackageTags>telemetry;opentelemetry;tracing;metrics;igloo</PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/&lt;owner&gt;/igloo.tel</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/&lt;owner&gt;/igloo.tel.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <Copyright>© Igloo Events</Copyright>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <!-- Suppress missing XML doc warnings on generated partial methods -->
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+
+    <!-- SourceLink: enables step-debugging into this package from consumer projects -->
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <!-- Deterministic builds on CI (both ADO and GitHub Actions set these env vars) -->
+    <ContinuousIntegrationBuild Condition="'$(TF_BUILD)' == 'true' or '$(GITHUB_ACTIONS)' == 'true'">true</ContinuousIntegrationBuild>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Use the ASP.NET Core shared framework — correct for net10.0 libraries.
+         Do NOT reference Microsoft.AspNetCore.Http.Abstractions (the 2.x NuGet package);
+         that is a legacy .NET Framework package and causes type collisions on net10.0. -->
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+    <!-- OpenTelemetry abstractions — lets consumers chain .AddIglooInstrumentation()
+         onto any OTel builder (including UseAzureMonitor). No exporter is bundled;
+         the consuming app decides where to send telemetry. -->
+    <PackageReference Include="OpenTelemetry.Extensions.Hosting" Version="1.15.3" />
+    <!-- SourceLink: maps PDB source paths back to GitHub for debuggable packages -->
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- PackagePath="" is the cross-platform idiomatic form for package root -->
+    <None Include="..\..\README.md" Pack="true" PackagePath="" />
+  </ItemGroup>
+
+</Project>
