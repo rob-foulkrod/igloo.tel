@@ -18,6 +18,9 @@ public static class IglooEventIds
     public const int EventDeletedId   = 1003;
     public const int EventNotFoundId  = 1004;
 
+
+
+    
     public static readonly EventId EventCreated   = new(EventCreatedId,  "igloo.event.created");
     public static readonly EventId EventUpdated   = new(EventUpdatedId,  "igloo.event.updated");
     public static readonly EventId EventDeleted   = new(EventDeletedId,  "igloo.event.deleted");
